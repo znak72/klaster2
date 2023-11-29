@@ -32,3 +32,23 @@ backend web_servers    # секция бэкенд
 - На проверку направьте конфигурационный файл haproxy, скриншоты, где видно перенаправление запросов на разные серверы при обращении к HAProxy c использованием домена example.local и без него.
 
 ### Решение 2
+
+haproxy.cfg
+```
+frontend example  # секция фронтенд
+        mode http
+        bind :8088
+	acl ACL_example.com hdr(host) -i example.local
+	use_backend web_servers if ACL_example.com
+
+backend web_servers    # секция бэкенд
+        mode http
+        balance roundrobin
+        option httpchk
+        http-check send meth GET uri /index.html
+        server s1 127.0.0.1:6666 weight 2 check
+        server s2 127.0.0.1:8888 weight 3 check
+        server s3 127.0.0.1:9999 weight 4 check
+```
+
+![1](https://github.com/znak72/klaster2/blob/main/haproxy2.png)
