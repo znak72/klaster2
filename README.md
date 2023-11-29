@@ -23,6 +23,7 @@ backend web_servers    # секция бэкенд
         server s1 127.0.0.1:8888 check
         server s2 127.0.0.1:9999 check
 ```
+![1](https://github.com/znak72/klaster2/blob/main/haproxy1.png)
 
 ### Задание 2
 - Запустите три simple python сервера на своей виртуальной машине на разных портах
